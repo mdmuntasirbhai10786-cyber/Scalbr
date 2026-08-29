@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { toast } from 'sonner'
+import { openCal } from '@/components/cal-init'
 
 /* ---------- NAV ---------- */
 function Nav({ onCta }) {
@@ -1095,13 +1096,22 @@ function ContactSection({ formRef }) {
               <p className="text-white/60 max-w-md mx-auto">
                 Thanks for reaching out. Our team will review your project and get back to you soon.
               </p>
-              <Button
-                onClick={() => { setSuccess(false); setAttachments([]); setUploadErr(''); setForm({ fullName:'', company:'', email:'', link:'', industry:'', videoType:'', volume:'', budget:'', message:'' }) }}
-                variant="outline"
-                className="mt-8 rounded-full border-white/15 bg-white/[0.02] hover:bg-white/[0.06]"
-              >
-                Submit another
-              </Button>
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Button
+                  onClick={() => openCal()}
+                  className="h-11 rounded-full px-6 bg-white text-black hover:bg-white/90 font-medium"
+                >
+                  Book a 15-min intro call
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  onClick={() => { setSuccess(false); setAttachments([]); setUploadErr(''); setForm({ fullName:'', company:'', email:'', link:'', industry:'', videoType:'', volume:'', budget:'', message:'' }) }}
+                  variant="outline"
+                  className="h-11 rounded-full border-white/15 bg-white/[0.02] hover:bg-white/[0.06]"
+                >
+                  Submit another
+                </Button>
+              </div>
             </motion.div>
           ) : (
             <motion.form
@@ -1217,7 +1227,16 @@ function ContactSection({ formRef }) {
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-xs text-white/40">We'll get back within 24 hours on business days.</p>
+                <div>
+                  <p className="text-xs text-white/40">We'll get back within 24 hours on business days.</p>
+                  <button
+                    type="button"
+                    onClick={() => openCal()}
+                    className="mt-1 text-xs text-white/70 hover:text-white underline-offset-4 hover:underline"
+                  >
+                    Prefer a call? Book a 15-min intro →
+                  </button>
+                </div>
                 <Button
                   type="submit"
                   disabled={loading}

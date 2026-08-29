@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, ArrowRight, Sparkles, Film, Mic, Megaphone, Code2, Layers, Briefcase, Check, Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { openCal } from '@/components/cal-init'
 
 /* ---------- SHARED NAV ---------- */
 function Nav() {
@@ -381,12 +382,14 @@ function ServicesPage() {
                 <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Button>
             </a>
-            <a href="/#work">
-              <Button variant="outline" className="h-12 rounded-full px-7 border-white/15 bg-white/[0.02] hover:bg-white/[0.06] text-white font-medium text-base">
-                <Play className="mr-2 h-4 w-4 fill-white" />
-                View Our Work
-              </Button>
-            </a>
+            <Button
+              onClick={() => openCal()}
+              variant="outline"
+              className="h-12 rounded-full px-7 border-white/15 bg-white/[0.02] hover:bg-white/[0.06] text-white font-medium text-base"
+            >
+              Book a Call
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>

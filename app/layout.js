@@ -1,5 +1,6 @@
 import { Inter, Inter_Tight } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
+import CalInit from '@/components/cal-init'
 import './globals.css'
 
 const inter = Inter({
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${interTight.variable} dark`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
+        <CalInit />
         <Toaster theme="dark" position="top-center" />
       </body>
     </html>
