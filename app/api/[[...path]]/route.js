@@ -42,6 +42,17 @@ async function handle(request, method) {
           return cors(NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 }))
         }
       }
+      const attachments = Array.isArray(body.attachments)
+        ? body.attachments
+            .filter((a) => a && a.name && a.dataUrl)
+            .slice(0, 10)
+            .map((a) => ({
+              name: String(a.name).slice(0, 200),
+              type: String(a.type || 'application/octet-stream').slice(0, 100),
+              size: Number(a.size) || 0,
+              dataUrl: String(a.dataUrl),
+            }))
+        : []
       const lead = {
         id: uuidv4(),
         fullName: body.fullName || '',
@@ -53,17 +64,23 @@ async function handle(request, method) {
         volume: body.volume || '',
         budget: body.budget || '',
         message: body.message || '',
+        attachments,
+        attachmentCount: attachments.length,
         createdAt: new Date().toISOString(),
       }
       const db = await getDb()
       await db.collection('leads').insertOne(lead)
-      return cors(NextResponse.json({ success: true, id: lead.id }))
+      return cors(NextResponse.json({ success: true, id: lead.id, attachments: attachments.length }))
     }
 
-    // GET /api/leads (admin peek)
+    // GET /api/leads (admin peek) — exclude heavy attachments payload
     if (path === 'leads' && method === 'GET') {
       const db = await getDb()
-      const leads = await db.collection('leads').find({}, { projection: { _id: 0 } }).sort({ createdAt: -1 }).limit(50).toArray()
+      const leads = await db.collection('leads')
+        .find({}, { projection: { _id: 0, attachments: 0 } })
+        .sort({ createdAt: -1 })
+        .limit(50)
+        .toArray()
       return cors(NextResponse.json({ leads }))
     }
 

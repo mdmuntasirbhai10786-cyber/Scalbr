@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, Play, Sparkles, Film, Wand2, Megaphone, Layers, ArrowRight, Check, Code2, LineChart, Mic, User, ShoppingBag, Youtube, Briefcase, X } from 'lucide-react'
+import { ArrowUpRight, Play, Sparkles, Film, Wand2, Megaphone, Layers, ArrowRight, Check, Code2, LineChart, Mic, User, ShoppingBag, Youtube, Briefcase, X, BadgeCheck, Layers3, Users, Workflow, Globe2, TrendingUp, Paperclip, FileVideo } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -35,10 +35,10 @@ function Nav({ onCta }) {
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
-          <a href="#services" className="hover:text-white transition">Services</a>
-          <a href="#industries" className="hover:text-white transition">Industries</a>
-          <a href="#work" className="hover:text-white transition">Our Work</a>
-          <a href="#about" className="hover:text-white transition">About</a>
+          <a href="/services" className="hover:text-white transition">Services</a>
+          <a href="/#industries" className="hover:text-white transition">Industries</a>
+          <a href="/#work" className="hover:text-white transition">Our Work</a>
+          <a href="/#about" className="hover:text-white transition">About</a>
         </nav>
         <Button
           onClick={onCta}
@@ -856,16 +856,166 @@ function Portfolio() {
   )
 }
 
+/* ---------- WHY SCALBR (BENTO) ---------- */
+const whyPoints = [
+  {
+    icon: BadgeCheck,
+    title: 'Professional Quality',
+    desc: 'High-quality editing built around your content, your voice, and your brand — never a generic template.',
+    hue: 240,
+    span: 'md:col-span-2',
+    big: true,
+  },
+  {
+    icon: Layers3,
+    title: 'Flexible Formats',
+    desc: 'From short-form clips to long-form YouTube, ads and motion graphics — one team, every format.',
+    hue: 280,
+    span: 'md:col-span-1',
+  },
+  {
+    icon: Users,
+    title: 'Scalable Team',
+    desc: 'Ramp content up or down without hiring or firing. Your creative capacity, on tap.',
+    hue: 200,
+    span: 'md:col-span-1',
+  },
+  {
+    icon: Workflow,
+    title: 'Clear Workflow',
+    desc: 'Simple communication, organized projects, structured revisions, and reliable delivery.',
+    hue: 160,
+    span: 'md:col-span-1',
+  },
+  {
+    icon: Globe2,
+    title: 'Multi-Niche Experience',
+    desc: 'We adapt editing style to your audience — SaaS, finance, creators, coaches, e-com, agencies.',
+    hue: 320,
+    span: 'md:col-span-1',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Growth-Focused Content',
+    desc: 'Every edit is designed with the platform, the audience, and the content objective in mind — so it actually moves the needle.',
+    hue: 30,
+    span: 'md:col-span-2',
+    big: true,
+  },
+]
+
+function WhySCALBR() {
+  return (
+    <section id="why" className="relative py-32 border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid lg:grid-cols-12 gap-10 mb-16">
+          <div className="lg:col-span-7">
+            <div className="text-xs font-mono text-white/40 mb-6">— WHY SCALBR</div>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="font-display font-black text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] tracking-tighter"
+            >
+              Built to Scale<br />
+              <span className="text-white/40">With You.</span>
+            </motion.h2>
+          </div>
+          <div className="lg:col-span-5 lg:pt-4">
+            <p className="text-white/60 leading-relaxed">
+              Six reasons ambitious brands and creators trust SCALBR with their content — not just their editing.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {whyPoints.map((p, i) => {
+            const Icon = p.icon
+            return (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F0F0F] p-7 hover:border-white/20 transition-all ${p.span} ${p.big ? 'md:min-h-[260px]' : 'md:min-h-[220px]'}`}
+              >
+                <div
+                  className="absolute -top-24 -right-24 h-56 w-56 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(circle, hsla(${p.hue}, 90%, 55%, 0.2), transparent 60%)` }}
+                />
+                <div className="relative flex flex-col h-full">
+                  <div
+                    className="h-10 w-10 rounded-lg flex items-center justify-center border border-white/10 mb-6"
+                    style={{ color: `hsl(${p.hue}, 80%, 70%)`, background: `hsla(${p.hue}, 80%, 50%, 0.06)` }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className={`font-display font-bold tracking-tight ${p.big ? 'text-2xl md:text-3xl' : 'text-xl'} mb-3`}>{p.title}</h3>
+                  <p className={`text-white/55 leading-relaxed ${p.big ? 'text-base max-w-md' : 'text-sm'}`}>{p.desc}</p>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ---------- FINAL CTA + FORM ---------- */
 function ContactSection({ formRef }) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [attachments, setAttachments] = useState([])
+  const [uploadErr, setUploadErr] = useState('')
+  const fileInputRef = useRef(null)
   const [form, setForm] = useState({
     fullName: '', company: '', email: '', link: '',
     industry: '', videoType: '', volume: '', budget: '', message: '',
   })
 
+  const MAX_FILE_MB = 15
+  const MAX_TOTAL_MB = 25
+
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }))
+
+  const readFileAsBase64 = (file) => new Promise((resolve, reject) => {
+    const r = new FileReader()
+    r.onload = () => resolve(r.result)
+    r.onerror = reject
+    r.readAsDataURL(file)
+  })
+
+  const handleFiles = async (fileList) => {
+    setUploadErr('')
+    const files = Array.from(fileList || [])
+    if (!files.length) return
+    const currentTotal = attachments.reduce((s, a) => s + a.size, 0)
+    const next = [...attachments]
+    for (const f of files) {
+      if (f.size > MAX_FILE_MB * 1024 * 1024) {
+        setUploadErr(`"${f.name}" is over ${MAX_FILE_MB}MB. Please share a link instead.`)
+        continue
+      }
+      const projected = next.reduce((s, a) => s + a.size, 0) + f.size
+      if (projected > MAX_TOTAL_MB * 1024 * 1024) {
+        setUploadErr(`Total attachments would exceed ${MAX_TOTAL_MB}MB.`)
+        break
+      }
+      try {
+        const dataUrl = await readFileAsBase64(f)
+        next.push({ name: f.name, type: f.type || 'application/octet-stream', size: f.size, dataUrl })
+      } catch {
+        setUploadErr(`Failed to read "${f.name}".`)
+      }
+    }
+    setAttachments(next)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
+  const removeAttachment = (i) => setAttachments((arr) => arr.filter((_, idx) => idx !== i))
 
   const submit = async (e) => {
     e.preventDefault()
@@ -878,7 +1028,7 @@ function ContactSection({ formRef }) {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, attachments }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || 'Something went wrong')
@@ -946,7 +1096,7 @@ function ContactSection({ formRef }) {
                 Thanks for reaching out. Our team will review your project and get back to you soon.
               </p>
               <Button
-                onClick={() => { setSuccess(false); setForm({ fullName:'', company:'', email:'', link:'', industry:'', videoType:'', volume:'', budget:'', message:'' }) }}
+                onClick={() => { setSuccess(false); setAttachments([]); setUploadErr(''); setForm({ fullName:'', company:'', email:'', link:'', industry:'', videoType:'', volume:'', budget:'', message:'' }) }}
                 variant="outline"
                 className="mt-8 rounded-full border-white/15 bg-white/[0.02] hover:bg-white/[0.06]"
               >
@@ -1016,6 +1166,54 @@ function ContactSection({ formRef }) {
                 <Field label="Tell us about your project">
                   <Textarea rows={4} value={form.message} onChange={(e) => update('message', e.target.value)} placeholder="Goals, style references, timeline..." className="bg-white/[0.02] border-white/10 resize-none" />
                 </Field>
+              </div>
+
+              {/* Attachments */}
+              <div className="mt-5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="block text-xs text-white/50 font-medium">Attach briefs, storyboards, or reference clips (optional)</span>
+                  <span className="text-[10px] text-white/35">Up to {MAX_FILE_MB}MB per file · {MAX_TOTAL_MB}MB total</span>
+                </div>
+                <label
+                  htmlFor="scalbr-files"
+                  onDragOver={(e) => { e.preventDefault() }}
+                  onDrop={(e) => { e.preventDefault(); handleFiles(e.dataTransfer.files) }}
+                  className="flex items-center gap-3 px-4 py-4 rounded-xl border border-dashed border-white/15 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25 cursor-pointer transition-all"
+                >
+                  <div className="h-10 w-10 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center">
+                    <Paperclip className="h-4 w-4 text-white/70" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm text-white/85 font-medium">Click to upload or drag files here</div>
+                    <div className="text-xs text-white/45">PDF, images, short reference clips (mp4, mov). For raw footage, paste a Drive / Frame.io / WeTransfer link above.</div>
+                  </div>
+                  <input
+                    id="scalbr-files"
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.mp4,.mov,.webm,.txt,.doc,.docx"
+                    className="sr-only"
+                    onChange={(e) => handleFiles(e.target.files)}
+                  />
+                </label>
+                {uploadErr && <div className="mt-2 text-xs text-red-400">{uploadErr}</div>}
+                {attachments.length > 0 && (
+                  <ul className="mt-3 space-y-2">
+                    {attachments.map((a, i) => (
+                      <li key={`${a.name}-${i}`} className="flex items-center gap-3 px-3 py-2 rounded-lg border border-white/[0.08] bg-white/[0.02]">
+                        <FileVideo className="h-4 w-4 text-white/50 shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-sm text-white/85 truncate">{a.name}</div>
+                          <div className="text-[11px] text-white/40">{(a.size / (1024 * 1024)).toFixed(2)} MB · {a.type || 'file'}</div>
+                        </div>
+                        <button type="button" onClick={() => removeAttachment(i)} className="h-7 w-7 rounded-md text-white/50 hover:text-white hover:bg-white/[0.06] flex items-center justify-center">
+                          <X className="h-4 w-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1102,6 +1300,7 @@ function App() {
       <Industries onCta={scrollToForm} />
       <HowItWorks />
       <Portfolio />
+      <WhySCALBR />
       <ContactSection formRef={formRef} />
       <Footer />
     </main>
