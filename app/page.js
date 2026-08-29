@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, Play, Sparkles, Film, Wand2, Megaphone, Layers, ArrowRight, Check } from 'lucide-react'
+import { ArrowUpRight, Play, Sparkles, Film, Wand2, Megaphone, Layers, ArrowRight, Check, Code2, LineChart, Mic, User, ShoppingBag, Youtube, Briefcase, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { toast } from 'sonner'
 
 /* ---------- NAV ---------- */
@@ -127,8 +128,46 @@ function EditingTimeline() {
 }
 
 function Hero({ onCta, onWork }) {
+  const videoRef = useRef(null)
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    try { v.load() } catch {}
+    const tryPlay = () => v.play().catch(() => {})
+    tryPlay()
+    v.addEventListener('canplay', tryPlay)
+    v.addEventListener('loadedmetadata', tryPlay)
+    return () => {
+      v.removeEventListener('canplay', tryPlay)
+      v.removeEventListener('loadedmetadata', tryPlay)
+    }
+  }, [])
   return (
     <section className="relative min-h-screen w-full overflow-hidden noise">
+      {/* Showreel background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover opacity-30"
+        >
+          <source src="/showreel.webm" type="video/webm" />
+          <source src="/showreel.mp4" type="video/mp4" />
+        </video>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.78) 55%, #0A0A0A 100%)',
+          }}
+        />
+      </div>
+
       {/* background grid + spotlight */}
       <div className="absolute inset-0 grid-bg radial-fade opacity-70" />
       <div
@@ -408,6 +447,415 @@ function Services() {
   )
 }
 
+/* ---------- INDUSTRIES ---------- */
+const industries = [
+  {
+    id: 'saas',
+    label: 'SaaS & Startups',
+    icon: Code2,
+    hue: 220,
+    title: 'The SaaS Content Engine',
+    desc: 'Turn product footage, screen recordings, and ideas into content that helps people understand and discover your product.',
+    deliverables: ['SaaS product videos', 'UI animations', 'Product demos', 'Feature launches', 'Founder content', 'Social media videos', 'Paid ad creatives'],
+    cta: 'Explore SaaS Content',
+  },
+  {
+    id: 'finance',
+    label: 'Finance & Trading',
+    icon: LineChart,
+    hue: 150,
+    title: 'The Finance Content Engine',
+    desc: 'Turn complex financial ideas into engaging videos your audience can understand and watch.',
+    deliverables: ['YouTube editing', 'Trading content', 'Chart animations', 'Educational visuals', 'Screen recordings', 'Short-form clips'],
+    cta: 'Explore Finance Content',
+  },
+  {
+    id: 'podcast',
+    label: 'Podcasters',
+    icon: Mic,
+    hue: 280,
+    title: 'Record Once. Create Content Everywhere.',
+    desc: 'Turn one podcast recording into a complete content system.',
+    deliverables: ['Full podcast editing', 'Short clips', 'Social media content', 'Captions', 'Hooks', 'Multiple content variations'],
+    cta: 'Scale Your Podcast Content',
+  },
+  {
+    id: 'personal',
+    label: 'Personal Brands & Coaches',
+    icon: User,
+    hue: 30,
+    title: 'The Personal Brand Content System',
+    desc: 'You create the knowledge. We turn it into content that builds your audience and personal brand.',
+    deliverables: ['Talking-head videos', 'Reels', 'YouTube videos', 'Educational content', 'Captions', 'B-roll', 'Motion graphics'],
+    cta: 'Build Your Content System',
+  },
+  {
+    id: 'ecom',
+    label: 'E-Commerce Brands',
+    icon: ShoppingBag,
+    hue: 340,
+    title: 'The Creative Ad Engine',
+    desc: 'More creative. More testing. More opportunities to find winning content.',
+    deliverables: ['Facebook Ads', 'Instagram Ads', 'UGC ads', 'Product videos', 'Creative variations', 'Promotional content'],
+    cta: 'Create More Ad Creative',
+  },
+  {
+    id: 'youtube',
+    label: 'YouTubers & Creators',
+    icon: Youtube,
+    hue: 0,
+    title: 'The YouTube Content Partner',
+    desc: 'You create. We handle the editing.',
+    deliverables: ['Long-form YouTube editing', 'Shorts', 'B-roll', 'Sound design', 'Motion graphics'],
+    cta: 'Scale Your Content',
+  },
+  {
+    id: 'agency',
+    label: 'Marketing Agencies',
+    icon: Briefcase,
+    hue: 200,
+    title: 'Your White-Label Editing Team',
+    desc: 'Take on more clients without building a bigger in-house editing team.',
+    deliverables: ['White-label editing', 'Scalable editing capacity', 'Multiple client projects', 'Dedicated workflow', 'Fast turnaround'],
+    cta: 'Partner With SCALBR',
+  },
+]
+
+function Industries({ onCta }) {
+  const [active, setActive] = useState('saas')
+  const current = industries.find((i) => i.id === active)
+  const Icon = current.icon
+
+  return (
+    <section id="industries" className="relative py-32 border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="mb-16">
+          <div className="text-xs font-mono text-white/40 mb-6">— INDUSTRIES</div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-display font-black text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] tracking-tighter max-w-4xl"
+          >
+            Built for Every Kind<br />
+            <span className="text-white/40">of Content.</span>
+          </motion.h2>
+          <p className="mt-6 text-white/60 max-w-xl">
+            Different industries need different content. Our editing adapts to your audience, platform, and goals.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-6">
+          {/* Left: industry picker */}
+          <div className="lg:col-span-4 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
+            {industries.map((ind) => {
+              const IconI = ind.icon
+              const isActive = ind.id === active
+              return (
+                <button
+                  key={ind.id}
+                  onClick={() => setActive(ind.id)}
+                  className={`shrink-0 lg:shrink flex items-center gap-3 px-4 py-3.5 rounded-xl border text-left transition-all ${
+                    isActive
+                      ? 'border-white/20 bg-white/[0.05]'
+                      : 'border-white/[0.06] bg-transparent hover:border-white/10 hover:bg-white/[0.02]'
+                  }`}
+                >
+                  <div
+                    className="h-8 w-8 rounded-md flex items-center justify-center border border-white/10 shrink-0"
+                    style={{ color: `hsl(${ind.hue}, 80%, 70%)`, background: isActive ? `hsla(${ind.hue}, 80%, 50%, 0.08)` : 'transparent' }}
+                  >
+                    <IconI className="h-4 w-4" />
+                  </div>
+                  <span className={`text-sm font-medium whitespace-nowrap ${isActive ? 'text-white' : 'text-white/70'}`}>
+                    {ind.label}
+                  </span>
+                  {isActive && (
+                    <motion.div layoutId="ind-dot" className="ml-auto h-1.5 w-1.5 rounded-full bg-white hidden lg:block" />
+                  )}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Right: content panel */}
+          <div className="lg:col-span-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0F0F0F] p-8 md:p-10 min-h-[420px]"
+              >
+                <div
+                  className="absolute -top-40 -right-40 h-96 w-96 rounded-full pointer-events-none"
+                  style={{ background: `radial-gradient(circle, hsla(${current.hue}, 80%, 55%, 0.25), transparent 60%)` }}
+                />
+                <div className="relative">
+                  <div
+                    className="h-12 w-12 rounded-lg flex items-center justify-center border border-white/10 mb-6"
+                    style={{ color: `hsl(${current.hue}, 80%, 70%)`, background: `hsla(${current.hue}, 80%, 50%, 0.06)` }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+
+                  <div className="text-xs font-mono text-white/40 mb-3">{current.label.toUpperCase()}</div>
+                  <h3 className="font-display font-bold text-3xl md:text-4xl tracking-tight leading-tight mb-4">
+                    {current.title}
+                  </h3>
+                  <p className="text-white/60 max-w-xl leading-relaxed">{current.desc}</p>
+
+                  <div className="mt-8">
+                    <div className="text-xs uppercase tracking-widest text-white/40 mb-3">Deliverables</div>
+                    <div className="flex flex-wrap gap-2">
+                      {current.deliverables.map((d) => (
+                        <span key={d} className="px-3 py-1.5 rounded-md text-xs bg-white/[0.04] border border-white/[0.06] text-white/75">
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={onCta}
+                    variant="outline"
+                    className="mt-10 rounded-full border-white/15 bg-white/[0.02] hover:bg-white/[0.08] group"
+                  >
+                    {current.cta}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ---------- HOW IT WORKS ---------- */
+const steps = [
+  { n: '01', title: 'Send Your Content', desc: 'Send your raw footage and project brief. We accept files of any size through our secure workflow.' },
+  { n: '02', title: 'We Build the Edit', desc: 'Our editing team transforms your footage into professional content tailored to your platform and audience.' },
+  { n: '03', title: 'Review & Refine', desc: 'Review your content and share feedback. We refine until it matches your vision perfectly.' },
+  { n: '04', title: 'Publish & Scale', desc: 'Receive polished videos ready for your audience, formatted for every platform you publish to.' },
+]
+
+function HowItWorks() {
+  return (
+    <section id="process" className="relative py-32 border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="mb-20">
+          <div className="text-xs font-mono text-white/40 mb-6">— PROCESS</div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-display font-black text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] tracking-tighter"
+          >
+            Simple Process.<br />
+            <span className="text-white/40">Serious Results.</span>
+          </motion.h2>
+        </div>
+
+        <div className="relative">
+          {/* Progress line */}
+          <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-white/[0.08]">
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.4, ease: 'easeOut' }}
+              style={{ transformOrigin: 'left' }}
+              className="h-full bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-transparent"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6 md:gap-4">
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.n}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12 }}
+                className="relative"
+              >
+                {/* Node */}
+                <div className="relative flex items-center mb-6">
+                  <div className="h-4 w-4 rounded-full bg-[#0A0A0A] border-2 border-white/70 shrink-0 z-10" />
+                  <div className="ml-4 md:hidden h-px flex-1 bg-white/10" />
+                </div>
+                <div className="font-mono text-xs text-white/40 mb-2">STEP {s.n}</div>
+                <h3 className="font-display font-bold text-2xl tracking-tight mb-3">{s.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed max-w-xs">{s.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ---------- PORTFOLIO ---------- */
+const portfolioCategories = ['All Work', 'Short Form', 'Long Form', 'Ads', 'SaaS', 'Podcasts', 'Finance', 'Motion Graphics']
+
+const portfolioItems = [
+  { id: 1, title: 'Founder Story — Ep. 04', industry: 'SaaS', category: 'Long Form', duration: '12:24', hue: 220, videoId: 'dQw4w9WgXcQ' },
+  { id: 2, title: 'Reel Series Vol. 12', industry: 'Personal Brand', category: 'Short Form', duration: '00:38', hue: 280, videoId: '9bZkp7q19f0' },
+  { id: 3, title: 'Trading Deep Dive', industry: 'Finance', category: 'Finance', duration: '18:02', hue: 150, videoId: 'dQw4w9WgXcQ' },
+  { id: 4, title: 'UGC Campaign Launch', industry: 'E-Commerce', category: 'Ads', duration: '00:24', hue: 340, videoId: '9bZkp7q19f0' },
+  { id: 5, title: 'Product Demo — Feature X', industry: 'SaaS', category: 'SaaS', duration: '02:15', hue: 200, videoId: 'dQw4w9WgXcQ' },
+  { id: 6, title: 'Podcast Highlights Reel', industry: 'Podcast', category: 'Podcasts', duration: '01:12', hue: 260, videoId: '9bZkp7q19f0' },
+  { id: 7, title: 'App Onboarding Motion', industry: 'SaaS', category: 'Motion Graphics', duration: '00:45', hue: 190, videoId: 'dQw4w9WgXcQ' },
+  { id: 8, title: 'Long-Form Interview', industry: 'Creator', category: 'Long Form', duration: '24:08', hue: 300, videoId: 'dQw4w9WgXcQ' },
+  { id: 9, title: 'Instagram Ad — A/B Test', industry: 'E-Commerce', category: 'Ads', duration: '00:18', hue: 320, videoId: '9bZkp7q19f0' },
+]
+
+function PortfolioCard({ item, i, onOpen }) {
+  return (
+    <motion.button
+      onClick={() => onOpen(item)}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.5, delay: (i % 6) * 0.05 }}
+      className="group relative text-left"
+    >
+      <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 bg-[#161616]">
+        <div
+          className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+          style={{
+            background: `linear-gradient(135deg, hsla(${item.hue}, 80%, 30%, 0.7), hsla(${item.hue + 40}, 80%, 12%, 0.9)), radial-gradient(circle at 30% 20%, hsla(${item.hue}, 90%, 60%, 0.5), transparent 60%)`,
+          }}
+        />
+        <div className="absolute inset-0 grid-bg opacity-20" />
+
+        {/* Play overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20">
+          <div className="h-16 w-16 rounded-full bg-white/95 flex items-center justify-center scale-90 group-hover:scale-100 transition-transform">
+            <Play className="h-5 w-5 fill-black text-black ml-0.5" />
+          </div>
+        </div>
+
+        {/* Corner labels */}
+        <div className="absolute top-3 left-3 px-2 py-1 rounded-md bg-black/50 backdrop-blur border border-white/10 text-[10px] font-medium text-white/80">
+          {item.category}
+        </div>
+        <div className="absolute bottom-3 right-3 px-2 py-1 rounded-md bg-black/50 backdrop-blur border border-white/10 text-[10px] font-mono text-white/70">
+          {item.duration}
+        </div>
+      </div>
+      <div className="mt-4 flex items-start justify-between gap-4">
+        <div>
+          <h3 className="font-display font-semibold text-lg tracking-tight leading-tight">{item.title}</h3>
+          <p className="text-xs text-white/50 mt-1">{item.industry}</p>
+        </div>
+        <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0 mt-1.5" />
+      </div>
+    </motion.button>
+  )
+}
+
+function Portfolio() {
+  const [active, setActive] = useState('All Work')
+  const [open, setOpen] = useState(null)
+
+  const filtered = active === 'All Work' ? portfolioItems : portfolioItems.filter((p) => p.category === active)
+
+  return (
+    <section id="work" className="relative py-32 border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="mb-14">
+          <div className="text-xs font-mono text-white/40 mb-6">— OUR WORK</div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-display font-black text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] tracking-tighter"
+          >
+            Don't Take Our Word For It.<br />
+            <span className="text-white/40">Watch The Work.</span>
+          </motion.h2>
+        </div>
+
+        {/* Filters */}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {portfolioCategories.map((c) => (
+            <button
+              key={c}
+              onClick={() => setActive(c)}
+              className={`px-4 py-2 rounded-full text-sm border transition-all ${
+                active === c
+                  ? 'bg-white text-black border-white'
+                  : 'bg-transparent text-white/70 border-white/10 hover:border-white/25 hover:text-white'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid */}
+        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((item, i) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35 }}
+              >
+                <PortfolioCard item={item} i={i} onOpen={setOpen} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {filtered.length === 0 && (
+          <div className="text-center py-20 text-white/50">No projects in this category yet.</div>
+        )}
+
+        {/* Lightbox */}
+        <Dialog open={!!open} onOpenChange={(v) => !v && setOpen(null)}>
+          <DialogContent className="max-w-5xl w-[95vw] p-0 bg-[#0A0A0A] border border-white/10 overflow-hidden">
+            <DialogTitle className="sr-only">{open?.title || 'Portfolio video'}</DialogTitle>
+            {open && (
+              <div>
+                <div className="relative aspect-video bg-black">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${open.videoId}?autoplay=1&rel=0&modestbranding=1`}
+                    title={open.title}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-6 flex items-center justify-between gap-4 border-t border-white/[0.06]">
+                  <div>
+                    <div className="text-xs font-mono text-white/40 mb-1">{open.category.toUpperCase()} · {open.industry.toUpperCase()}</div>
+                    <h3 className="font-display font-bold text-xl">{open.title}</h3>
+                  </div>
+                  <div className="text-xs font-mono text-white/50">{open.duration}</div>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
+    </section>
+  )
+}
+
 /* ---------- FINAL CTA + FORM ---------- */
 function ContactSection({ formRef }) {
   const [loading, setLoading] = useState(false)
@@ -649,8 +1097,11 @@ function App() {
   return (
     <main className="relative">
       <Nav onCta={scrollToForm} />
-      <Hero onCta={scrollToForm} onWork={scrollToServices} />
+      <Hero onCta={scrollToForm} onWork={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })} />
       <Services />
+      <Industries onCta={scrollToForm} />
+      <HowItWorks />
+      <Portfolio />
       <ContactSection formRef={formRef} />
       <Footer />
     </main>
