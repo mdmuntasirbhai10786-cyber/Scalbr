@@ -32,7 +32,7 @@ function Nav({ onCta }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 group">
           <span className="font-display font-black text-xl tracking-tight">
-            SCALBR<span className="text-indigo-400">.</span>
+            <span className="text-[#4CAF50]">SCAL</span><span className="text-white">BR</span>
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
@@ -92,9 +92,9 @@ function FloatingFrame({ className, delay = 0, label, hue = 240, aspect = 'aspec
 
 function EditingTimeline() {
   const tracks = [
-    { color: 'bg-indigo-500/70', segments: [[0, 30], [35, 75], [80, 100]] },
-    { color: 'bg-fuchsia-500/60', segments: [[10, 45], [55, 90]] },
-    { color: 'bg-emerald-500/60', segments: [[5, 20], [25, 60], [70, 95]] },
+    { color: 'bg-[#4CAF50]/70', segments: [[0, 30], [35, 75], [80, 100]] },
+    { color: 'bg-amber-400/60', segments: [[10, 45], [55, 90]] },
+    { color: 'bg-cyan-500/60', segments: [[5, 20], [25, 60], [70, 95]] },
   ]
   return (
     <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[min(680px,90%)] rounded-xl border border-white/10 bg-[#0f0f0f]/80 backdrop-blur-xl p-3 shadow-2xl">
@@ -175,7 +175,7 @@ function Hero({ onCta, onWork }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(1000px 500px at 50% -10%, rgba(99,102,241,0.18), transparent 70%), radial-gradient(600px 400px at 80% 80%, rgba(217,70,239,0.10), transparent 70%)',
+            'radial-gradient(1000px 500px at 50% -10%, rgba(76,175,80,0.22), transparent 70%), radial-gradient(600px 400px at 80% 80%, rgba(76,175,80,0.10), transparent 70%)',
         }}
       />
 
@@ -209,7 +209,7 @@ function Hero({ onCta, onWork }) {
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 1, duration: 0.8, ease: 'easeOut' }}
                   style={{ transformOrigin: 'left' }}
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-indigo-400"
+                  className="absolute -bottom-2 left-0 right-0 h-1 bg-[#4CAF50]"
                 />
               </span>
             </motion.h1>
@@ -270,19 +270,19 @@ function Hero({ onCta, onWork }) {
             <FloatingFrame
               className="top-0 left-10 w-[62%]"
               label="REEL — SHORT FORM"
-              hue={240}
+              hue={122}
               delay={0.1}
             />
             <FloatingFrame
               className="top-24 right-0 w-[48%]"
               label="YT — LONG FORM"
-              hue={280}
+              hue={190}
               delay={0.4}
             />
             <FloatingFrame
               className="bottom-24 left-0 w-[46%]"
               label="SAAS DEMO"
-              hue={200}
+              hue={220}
               delay={0.7}
             />
             <FloatingFrame
@@ -296,8 +296,8 @@ function Hero({ onCta, onWork }) {
 
           {/* Mobile stripped-down visual */}
           <div className="lg:hidden relative h-[280px] mt-4">
-            <FloatingFrame className="top-0 left-4 w-[70%]" label="REEL" hue={240} delay={0.1} />
-            <FloatingFrame className="bottom-4 right-4 w-[62%]" label="YT" hue={280} delay={0.3} />
+            <FloatingFrame className="top-0 left-4 w-[70%]" label="REEL" hue={122} delay={0.1} />
+            <FloatingFrame className="bottom-4 right-4 w-[62%]" label="YT" hue={190} delay={0.3} />
           </div>
         </div>
       </div>
@@ -673,7 +673,7 @@ function HowItWorks() {
               viewport={{ once: true }}
               transition={{ duration: 1.4, ease: 'easeOut' }}
               style={{ transformOrigin: 'left' }}
-              className="h-full bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-transparent"
+              className="h-full bg-gradient-to-r from-[#4CAF50] via-[#7ED67F] to-transparent"
             />
           </div>
 
@@ -1050,7 +1050,7 @@ function ContactSection({ formRef }) {
           animate={{ opacity: [0.4, 0.8, 0.4] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.25), transparent 60%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(76,175,80,0.28), transparent 60%)' }}
         />
         <div className="absolute inset-0 grid-bg radial-fade opacity-30" />
       </div>
@@ -1270,7 +1270,9 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid md:grid-cols-3 gap-10">
           <div>
-            <div className="font-display font-black text-2xl">SCALBR<span className="text-indigo-400">.</span></div>
+            <div className="font-display font-black text-2xl">
+              <span className="text-[#4CAF50]">SCAL</span><span className="text-white">BR</span>
+            </div>
             <p className="text-white/50 text-sm mt-4 max-w-xs">
               Your Content. Our Editing Team. Built for brands and creators that take content seriously.
             </p>

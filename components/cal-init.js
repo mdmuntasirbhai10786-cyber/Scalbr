@@ -42,7 +42,7 @@ export default function CalInit() {
       window.Cal('init', { origin: 'https://cal.com' })
       window.Cal('ui', {
         theme: 'dark',
-        styles: { branding: { brandColor: '#6366f1' } },
+        styles: { branding: { brandColor: '#4CAF50' } },
         hideEventTypeDetails: false,
         layout: 'month_view',
       })

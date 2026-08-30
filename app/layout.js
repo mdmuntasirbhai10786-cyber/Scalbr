@@ -19,6 +19,11 @@ const interTight = Inter_Tight({
 export const metadata = {
   title: 'SCALBR — Your Content. Our Editing Team.',
   description: 'SCALBR helps creators, brands, and businesses turn raw footage into high-quality content built to engage audiences and support growth.',
+  icons: {
+    icon: '/scalbr-logo.png',
+    shortcut: '/scalbr-logo.png',
+    apple: '/scalbr-logo.png',
+  },
 }
 
 export default function RootLayout({ children }) {

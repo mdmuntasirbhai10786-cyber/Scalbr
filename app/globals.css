@@ -22,7 +22,7 @@
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 240 100% 65%;
+    --ring: 122 39% 49%;
     --radius: 0.75rem;
   }
 
@@ -75,6 +75,6 @@
   }
 
   .glow-accent {
-    box-shadow: 0 0 60px -10px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 60px -10px rgba(76, 175, 80, 0.45);
   }
 }

@@ -25,7 +25,7 @@ function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="/" className="font-display font-black text-xl tracking-tight">
-          SCALBR<span className="text-indigo-400">.</span>
+          <span className="text-[#4CAF50]">SCAL</span><span className="text-white">BR</span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
           <a href="/services" className="text-white transition">Services</a>
@@ -50,7 +50,9 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid md:grid-cols-3 gap-10">
           <div>
-            <div className="font-display font-black text-2xl">SCALBR<span className="text-indigo-400">.</span></div>
+            <div className="font-display font-black text-2xl">
+              <span className="text-[#4CAF50]">SCAL</span><span className="text-white">BR</span>
+            </div>
             <p className="text-white/50 text-sm mt-4 max-w-xs">
               Your Content. Our Editing Team. Built for brands and creators that take content seriously.
             </p>
@@ -311,7 +313,7 @@ function ServicesPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(1000px 500px at 50% -10%, rgba(99,102,241,0.18), transparent 70%)',
+              'radial-gradient(1000px 500px at 50% -10%, rgba(76,175,80,0.22), transparent 70%)',
           }}
         />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
@@ -365,7 +367,7 @@ function ServicesPage() {
           animate={{ opacity: [0.35, 0.65, 0.35] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.22), transparent 60%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(76,175,80,0.26), transparent 60%)' }}
         />
         <div className="relative max-w-4xl mx-auto px-6 lg:px-10 text-center">
           <h2 className="font-display font-black text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] tracking-tighter">
