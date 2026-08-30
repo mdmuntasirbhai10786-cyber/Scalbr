@@ -3,14 +3,19 @@ import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
 
 const uri = process.env.MONGO_URL
+const dbName = process.env.DB_NAME // optional; falls back to db from URI
 let cachedClient = null
 
 async function getDb() {
-  if (cachedClient) return cachedClient.db()
-  const client = new MongoClient(uri)
+  if (!uri) throw new Error('MONGO_URL is not set')
+  if (cachedClient) return dbName ? cachedClient.db(dbName) : cachedClient.db()
+  const client = new MongoClient(uri, {
+    serverSelectionTimeoutMS: 5000,
+    maxPoolSize: 10,
+  })
   await client.connect()
   cachedClient = client
-  return client.db()
+  return dbName ? client.db(dbName) : client.db()
 }
 
 function cors(res) {

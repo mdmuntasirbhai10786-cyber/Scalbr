@@ -977,8 +977,8 @@ function ContactSection({ formRef }) {
     industry: '', videoType: '', volume: '', budget: '', message: '',
   })
 
-  const MAX_FILE_MB = 15
-  const MAX_TOTAL_MB = 25
+  const MAX_FILE_MB = 2
+  const MAX_TOTAL_MB = 3
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }))
 
